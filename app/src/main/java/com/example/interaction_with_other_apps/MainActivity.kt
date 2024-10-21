@@ -1,8 +1,10 @@
 package com.example.interaction_with_other_apps
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -49,6 +51,21 @@ class MainActivity : AppCompatActivity() {
             // as the input
             getContent.launch("image/*")
         }
+
+        val data: Uri? = intent?.data
+        Log.d("jashwant", "onCreate: data-"+data)
+
+        // Figure out what to do based on the intent type
+        if (intent?.type?.startsWith("image/") == true) {
+            Toast.makeText(this,data.toString(),Toast.LENGTH_SHORT).show()
+        } else if (intent?.type == "text/plain") {
+            Toast.makeText(this,data.toString(),Toast.LENGTH_SHORT).show()
+        }
+        Intent("android.intent.action.SEND", Uri.parse("content://result_uri")).also { result ->
+            Log.d("jashwant", "onCreate: result-"+result)
+            setResult(Activity.RESULT_OK, result)
+        }
+        finish()
 
     }
 }
