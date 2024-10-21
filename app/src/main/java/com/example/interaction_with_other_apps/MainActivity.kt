@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +14,9 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity() {
     lateinit var button:Button
     lateinit var map:Button
+    val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        Toast.makeText(this,uri.toString(),Toast.LENGTH_SHORT).show()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,6 +40,14 @@ class MainActivity : AppCompatActivity() {
                 Intent(Intent.ACTION_VIEW, location)
             }
             startActivity(mapIntent)
+        }
+
+        val selectButton = findViewById<Button>(R.id.select_button)
+
+        selectButton.setOnClickListener {
+            // Pass in the mime type you want to let the user select
+            // as the input
+            getContent.launch("image/*")
         }
 
     }

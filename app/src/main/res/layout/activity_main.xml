@@ -30,5 +30,11 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Map"/>
+    <Button
+        android:id="@+id/select_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Pick Image"/>
 
 </LinearLayout>
